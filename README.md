@@ -159,78 +159,41 @@
 
 ## 七、Graph 截圖說明
 
-以下是本報告應附上的知識圖譜截圖，建議使用 Neo4j Browser 執行對應查詢後截圖。
-
-> **說明：**  
-> 請將你實際的 Neo4j Browser 截圖放入對應位置，或替換成你自己的圖片檔案路徑。
 
 ### 圖 1：KG 整體結構圖
 
-此圖應顯示三層結構：
+此圖顯示三層結構：
 
 **Regulation → Article → Rule**
 
-![KG整體結構圖](screenshots/kg_overall_structure.png)
+<img width="1444" height="557" alt="image" src="https://github.com/user-attachments/assets/bacd7951-a9ef-47e3-ac78-26883881165a" />
 
-**建議使用的 Cypher 查詢：**
-
-```cypher
-MATCH (r:Regulation)-[:HAS_ARTICLE]->(a:Article)-[:CONTAINS_RULE]->(ru:Rule)
-RETURN r, a, ru
-LIMIT 12;
-```
 
 ## 圖 2：Regulation 與 Article 的關係
 
-此圖可顯示法規文件如何連結到各條文。
+此圖顯示法規文件如何連結到各條文。
 
-**建議使用的 Cypher 查詢：**
+<img width="1455" height="506" alt="image" src="https://github.com/user-attachments/assets/d92c50f1-c699-4ca8-93d2-a7eb5930f90a" />
 
-```cypher
-MATCH (r:Regulation)-[:HAS_ARTICLE]->(a:Article)
-RETURN r, a
-LIMIT 15;
-```
 
 ## 圖 3：Article 與 Rule 的關係
 
-此圖可顯示條文如何對應到較細粒度的規則節點。
+此圖顯示條文如何對應到較細粒度的規則節點。
 
-**建議使用的 Cypher 查詢：**
+<img width="1373" height="554" alt="image" src="https://github.com/user-attachments/assets/1f1dabc0-d9d2-42d2-9204-dce849b52bc5" />
 
-```cypher
-MATCH (a:Article)-[:CONTAINS_RULE]->(ru:Rule)
-RETURN a, ru
-LIMIT 15;
-```
 
-## 圖 4：Rule 節點屬性示意圖
 
-此圖可展示 `Rule` 節點內部屬性，例如：
-
-- `rule_id`
-- `type`
-- `action`
-- `result`
-- `art_ref`
-- `reg_name`
-
-**建議使用的 Cypher 查詢：**
-
-```cypher
-MATCH (ru:Rule)
-RETURN ru
-LIMIT 5;
-```
 
 ---
 
 ## 八、截圖說明文字範例
 
 上述截圖顯示，本研究成功建立了以 `Regulation`、`Article`、`Rule` 為核心的階層式知識圖譜。  
-其中，`Regulation` 透過 `HAS_ARTICLE` 與 `Article` 連結，`Article` 再透過 `CONTAINS_RULE` 與 `Rule` 節點連結。這樣的設計同時保留了法規文件的原始層級結構與可供檢索的細粒度規則結構。
+其中，`Regulation` 透過 `HAS_ARTICLE` 與 `Article` 節點連結，`Article` 再透過 `CONTAINS_RULE` 與 `Rule` 節點連結，形成「法規文件 → 條文 → 規則」的三層結構。
 
-此外，`Rule` 節點中所儲存的 `type`、`action`、`result`、`art_ref` 與 `reg_name` 等資訊，使系統能夠更精準地回答與法規規則有關的問題，而不只是依賴整段條文文字做全文搜尋。
+從圖中可看出，本知識圖譜不僅保留了法規原始的文件層級，也將條文進一步轉換為可供問答檢索的細粒度規則節點。  
+此外，`Rule` 節點中所儲存的 `type`、`action`、`result`、`art_ref` 與 `reg_name` 等資訊，使系統能夠更精準地回答與法規規則相關的問題，而不只是依賴整段條文文字做全文搜尋。
 
 ---
 
@@ -270,3 +233,10 @@ LIMIT 5;
 - 是否允許某種行為
 
 因此，本知識圖譜可作為 regulation-aware retrieval 與 grounded answer generation 的有效基礎。
+
+## 十一、自動評測結果
+
+下圖為本系統在 `auto_test.py` 上的最終評測結果。  
+系統共測試 20 題，最終通過 20 題，整體正確率為 100.0%。
+<img width="744" height="134" alt="image" src="https://github.com/user-attachments/assets/9abd28ff-d33c-47d9-bd52-74e8bb199af1" />
+
