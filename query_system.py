@@ -552,10 +552,10 @@ def main() -> None:
     load_local_llm()
 
     print("=" * 50)
-    print("🎓 NCU Regulation Assistant")
+    print("NCU Regulation Assistant")
     print("=" * 50)
-    print("💡 Try: 'What is the penalty for forgetting student ID?'")
-    print("👉 Type 'exit' to quit.\n")
+    print("Try: 'What is the penalty for forgetting student ID?'")
+    print("Type 'exit' to quit.\n")
 
     while True:
         try:
@@ -563,7 +563,7 @@ def main() -> None:
             if not user_q:
                 continue
             if user_q.lower() in {"exit", "quit"}:
-                print("👋 Bye!")
+                print("Bye!")
                 break
 
             results = get_relevant_articles(user_q)
@@ -571,10 +571,10 @@ def main() -> None:
             print(f"Bot: {answer}")
 
         except KeyboardInterrupt:
-            print("\n👋 Bye!")
+            print("\n Bye!")
             break
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f"Error: {e}")
 
     driver.close()
 
